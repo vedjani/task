@@ -11,6 +11,9 @@
 int main()
 {
     int num,one=1;
+    
+    printf("enter a number :- ");
+    scanf("%d",&num);
 
     if (num<=1)
     {
@@ -22,11 +25,12 @@ int main()
         {
             if (num%i==0)
             {
-                printf("this number is prime");
+                printf("this is not prime");
             }
             else
             {
-                printf("this is not prime");
+                
+                printf("this number is prime");
             }
             
             
