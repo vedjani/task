@@ -1,0 +1,573 @@
+LAB EXERCISES: 
+
+
+1
+
+Lab 1: Create a new database named school_db and a table called students with the 
+       following columns: student_id, student_name, age, class, and address. 
+
+ANS:
+	1.CREATE DATABASE school_db;
+	2.CREATE TABLE students (ID int PRIMARY KEY AUTO_INCREMENT,NAME  varchar(60),AGE int,CLASS VARCHAR(30),ADDRESS VARCHAR(200))
+
+Lab 2: Insert five records into the students table and retrieve all records using the SELECT 
+       statement.
+
+ANS:
+      1.INSERT INTO students (ID,NAME,AGE,CLASS,ADDRESS) VALUES(1,'VED JANI',21,'MCA','MORBI');
+	INSERT INTO students (ID,NAME,AGE,CLASS,ADDRESS) VALUES(2,'RUSHI JANI',20,'M COM','MORBI');
+	INSERT INTO students (ID,NAME,AGE,CLASS,ADDRESS) VALUES(3,'DEV JOSHI',21,'B COM','MORBI');
+	INSERT INTO students (ID,NAME,AGE,CLASS,ADDRESS) VALUES(4,'ROMIT VAGHLA',18,'MCA','RAJKOT');
+	INSERT INTO students (ID,NAME,AGE,CLASS,ADDRESS) VALUES(5,'KRISH SAVALIYA',18,'BCA','RAJKOT');
+
+     2. SELECT * FROM `students`
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+2
+
+Lab 1: Write SQL queries to retrieve specific columns (student_name and age) from the 
+students table. 
+
+ANS:SELECT NAME,AGE from students
+
+
+
+Lab 2:Write SQL queries to retrieve all students whose age is greater than 10. 
+
+ANS:select * from students where AGE>10
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------- 
+3
+
+Lab 1: Create a table teachers with the following columns: teacher_id (Primary Key), 
+teacher_name (NOT NULL), subject (NOT NULL), and email (UNIQUE). 
+
+ANS:CREATE TABLE teachers(teacher_id int Primary Key,teacher_name varchar(60)NOT NULL, subject varchar(50)NOT NULL, email varchar(90)UNIQUE)
+
+
+
+Lab 2:Implement a FOREIGN KEY constraint to relate the teacher_id from the 
+teachers table with the students table. 
+
+ANS:ALTER TABLE teachers ADD INDEX (teacher_id);
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------- 
+
+4
+
+Lab 1: Create a table courses with columns: course_id, course_name, and 
+course_credits. Set the course_id as the primary key
+
+ANS:CREATE TABLE courses (course_id int PRIMARY KEY,course_name varchar(50),course_credits varchar(50))
+
+LAb 2:Use the CREATE command to create a database university_db. 
+ANS: CREATE DATABASE university_db;
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+5
+Lab 1: Modify the courses table by adding a column course_duration using the ALTER 
+command. 
+
+ANS:ALTER TABLE courses ADD course_duration varchar(60)
+
+Lab 2: Drop the course_credits column from the courses table. 
+
+ANS: ALTER TABLE courses DROP course_credits
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+6
+
+Lab 1: Drop the teachers table from the school_db database. 
+
+ANS: DROP TABLE teachers
+
+Lab 2: Drop the students table from the school_db database and verify that the table has 
+been removed.
+
+ANS: DROP TABLE students
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+7
+
+Lab 1: Insert three records into the courses table using the INSERT command. 
+
+ANS:    INSERT INTO courses (course_id,course_name,course_duration) VALUES (1,'python','8 months');
+	INSERT INTO courses (course_id,course_name,course_duration) VALUES (2,'flutter','8 months');
+	INSERT INTO courses (course_id,course_name,course_duration) VALUES (3,'full stack','24 months');
+
+
+Lab 2: Update the course duration of a specific course using the UPDATE command. 
+
+ANS: UPDATE courses SET course_duration='9 months' WHERE course_name='python'
+
+
+Lab 3: Delete a course with a specific course_id from the courses table using the DELETE 
+       command. 
+
+ANS: DELETE FROM courses WHERE course_name='flutter'
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8
+
+Lab 1: Retrieve all courses from the courses table using the SELECT statement. 
+
+ANS: SELECT * FROM `courses` 
+
+Lab 2: Sort the courses based on course_duration in descending order using ORDER BY
+
+ANS: SELECT * FROM courses ORDER BY course_duration ASC
+
+Lab 3: Limit the results of the SELECT query to show only the top two courses using LIMIT. 
+
+ANS: SELECT * FROM courses ORDER BY course_duration ASC LIMIT 2
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+9
+
+Lab 1: Create two new users user1 and user2 and grant user1 permission to SELECT 
+       from the courses table. 
+
+ANS:	CREATE USER user1 WITH PASSWORD 'password1';
+	CREATE USER user2 WITH PASSWORD 'password2';
+	GRANT SELECT ON courses TO user1;
+
+Lab 2: Revoke the INSERT permission from user1 and give it to user2. 
+
+ANS: 	REVOKE INSERT ON your_database_name.courses FROM 'user1'@'localhost';
+	GRANT INSERT ON your_database_name.courses TO 'user2'@'localhost';
+	FLUSH PRIVILEGES;
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+10
+
+
+Lab 1: Insert a few rows into the courses table and use COMMIT to save the changes.
+
+ANS:	BEGIN;
+	INSERT INTO courses (course_id, course_name, instructor) VALUES
+	(101, 'Mathematics', 'Dr. Sharma'),
+	(102, 'Physics', 'Dr. Mehta'),
+	(103, 'Chemistry', 'Dr. Rao');
+	COMMIT;
+
+Lab 2: Insert additional rows, then use ROLLBACK to undo the last insert operation. 
+
+ANS:	BEGIN;
+	INSERT INTO courses (course_id, course_name, instructor) VALUES
+	(104, 'Biology', 'Dr. Kapoor'),
+	(105, 'English', 'Prof. Sen');
+	ROLLBACK;  
+
+Lab 3: Create a SAVEPOINT before updating the courses table, and use it to roll back 
+       specific changes.
+
+ANS: BEGIN;
+	UPDATE courses SET instructor = 'Dr. Mukherjee' WHERE course_id = 101;
+	SAVEPOINT before_second_update;
+	UPDATE courses SET instructor = 'Dr. Das' WHERE course_id = 102;
+	ROLLBACK TO SAVEPOINT before_second_update;
+    COMMIT;
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+11
+
+Lab 1: Create two tables: departments and employees. Perform an INNER JOIN to 
+       display employees along with their respective departments. 
+
+ANS: CREATE TABLE employees(emp_id int PRIMARY KEY,emp_name varchar(60),depid int ,salary int,FOREIGN KEY (depid) REFERENCES departments(dep_id));
+	
+        INSERT INTO departments (dep_id, dep_name) VALUES(1, 'HR'),(2, 'Coding'),(3, 'Testing')
+	INSERT INTO employees (emp_id,emp_name,depid,salary) VALUES(101,'ved',2,20000),(102,'manshi',1,25000),(103,'yash',3,15000),(104,'rushi',2,20000),(105,'dev',3,15000)
+	
+	 SELECT employees.emp_id,employees.emp_name,departments.dep_name FROM employees INNER JOIN departments ON
+        employees.depid = departments.dep_id;
+
+Lab 2: Use a LEFT JOIN to show all departments, even those without employees. 
+
+ANS:
+	SELECT departments.dep_id, departments.dep_name, employees.emp_id,employees.emp_name FROM departments JOIN  employees ON 
+	departments.dep_id = employees.depid; 
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+12
+
+Lab 1: Group employees by department and count the number of employees in each 
+	department using GROUP BY. 
+
+ANS:	SELECT COUNT(emp_id),depid
+	FROM employees
+	GROUP BY depid;
+	
+Lab 2: Use the AVG aggregate function to find the average salary of employees in each 
+	department. 
+
+ANS:  SELECT AVG(salary)FROM employees;
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+13
+
+Lab 1: Write a stored procedure to retrieve all employees from the employees table based 
+	on department. 
+
+ans: 
+
+DELIMITER $$
+
+CREATE PROCEDURE GetEmployeesByDepartment(IN deptName VARCHAR(50))
+BEGIN
+    SELECT e.emp_id, e.emp_name, e.salary, d.dep_name
+    FROM employees e
+    JOIN departments d ON e.depid = d.dep_id
+    WHERE d.dep_name = deptName;
+END $$
+
+DELIMITER ;
+
+
+Lab 2: Write a stored procedure that accepts course_id as input and returns the course 
+details. 
+
+ans:
+
+DELIMITER $$
+
+CREATE PROCEDURE GetCourseDetails(IN p_course_id INT)
+BEGIN
+    SELECT course_id, course_name, course_duration
+    FROM courses
+    WHERE course_id = p_course_id;
+END $$
+
+DELIMITER ;
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+14
+
+Lab 1: Create a view to show all employees along with their department names. 
+
+ans:
+
+CREATE VIEW emp_view_dep AS
+SELECT employees.emp_id,
+       employees.emp_name,
+       employees.salary,
+       departments.dep_name
+FROM employees 
+JOIN departments 
+     ON employees.depid = departments.dep_id;
+
+
+Lab 2: Modify the view to exclude employees whose salaries are below $50,000. 
+
+ans:
+CREATE VIEW newsalarys AS
+SELECT emp_name,salary     
+FROM employees
+WHERE salary > 50000 ;
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+15
+
+Lab 1: Create a trigger to automatically log changes to the employees table when a new 
+employee is added. 
+
+ans:
+	CREATE TABLE employee_log (log_id INT AUTO_INCREMENT PRIMARY KEY,emp_id INT,emp_name VARCHAR(60),depid INT,salary INT,
+	action VARCHAR(20),log_time TIMESTAMP DEFAULT CURRENT_TIMESTAMP);
+
+	DELIMITER $$
+
+	CREATE TRIGGER emp_log
+	AFTER INSERT 
+	ON
+	employees 
+	FOR EACH ROW
+	BEGIN
+   	 INSERT INTO employee_log (emp_id, emp_name, depid, salary, action)
+   	 VALUES (NEW.emp_id, NEW.emp_name, NEW.depid, NEW.salary, 'INSERT');
+	END$$
+
+	DELIMITER ;
+
+
+
+Lab 2: Create a trigger to update the last_modified timestamp whenever an employee 
+	record is updated. 
+
+ans: DELIMITER $$
+
+	CREATE TRIGGER emp_log_UPD
+	BEFORE UPDATE ON
+	employees 
+	FOR EACH ROW
+	BEGIN
+   	 INSERT INTO employee_log (emp_id, emp_name, depid, salary, action)
+   	 VALUES (NEW.emp_id, NEW.emp_name, NEW.depid, NEW.salary, 'UPDATE');
+   
+	END$$
+
+	DELIMITER ;
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+16
+
+Lab 1: Write a PL/SQL block to print the total number of employees from the employees 
+	table. 
+
+ans:	DELIMITER $$
+
+	CREATE PROCEDURE total_employees()
+	BEGIN
+  	  DECLARE v_total INT;
+
+  	  SELECT COUNT(*) INTO v_total FROM employees;
+
+  	  SELECT CONCAT('Total Number of Employees: ', v_total) AS message;
+	END $$
+
+	DELIMITER ;
+
+
+Lab 2: Create a PL/SQL block that calculates the total sales from an orders table.
+
+ans:
+	CREATE TABLE orders (order_id INT AUTO_INCREMENT PRIMARY KEY,customer_name VARCHAR(50) NOT NULL,order_date varchar(60) NOT NULL,order_amount INT NOT NULL);
+	
+	INSERT INTO orders (customer_name, order_date, order_amount) VALUES
+	('Amit Sharma',   '2025-08-01', 1500),
+	('Riya Patel',    '2025-08-02', 2300),
+	('John Smith',    '2025-08-03',  800),
+	('Ananya Gupta',  '2025-08-04', 1200),
+	('David Johnson', '2025-08-05', 3000);
+
+
+	DELIMITER $$
+
+	CREATE PROCEDURE calculate_total_sales()
+	BEGIN
+  	  DECLARE v_total_sales INT;
+   	 SELECT SUM(order_amount) INTO v_total_sales
+   	 FROM orders;
+   	 SELECT CONCAT('Total Sales = ', v_total_sales) AS message;
+	END $$
+
+	DELIMITER ;
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+17
+
+Lab 1: Write a PL/SQL block using an IF-THEN condition to check the department of an 
+	employee. 
+
+ans:	DELIMITER //
+
+	CREATE PROCEDURE CheckDepartment(IN p_emp_id INT)
+	BEGIN
+   	 DECLARE dep INT;
+
+   	 SELECT depid INTO dep FROM employees WHERE emp_id = p_emp_id;
+
+   	 IF dep = 2 THEN
+      	 	 SELECT 'Employee belongs to Coding department' AS message;
+   	 ELSE
+        	SELECT 'Employee is in a different department' AS message;
+   	 END IF;
+	END //
+
+	DELIMITER ;
+		
+
+
+Lab 2: Use a FOR LOOP to iterate through employee records and display their names.
+
+ans:
+
+	DELIMITER //
+
+	CREATE PROCEDURE ShowEmployeeNames()
+	BEGIN
+	DECLARE done INT DEFAULT FALSE;
+	DECLARE empName VARCHAR(100);
+	DECLARE emp_cursor CURSOR FOR
+	SELECT emp_name FROM employees;
+	DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+	OPEN emp_cursor;
+	emp_loop: LOOP
+	FETCH emp_cursor INTO empName;
+	IF done THEN
+	LEAVE emp_loop;
+	END IF;
+	SELECT empName AS Employee_Name;
+	END LOOP;
+	CLOSE emp_cursor;
+	END //
+	DELIMITER ;
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+18
+
+Lab 1: Write a PL/SQL block using an explicit cursor to retrieve and display employee details.
+
+ans:
+DELIMITER //
+
+CREATE PROCEDURE ShowEmployeeDetails()
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE v_emp_id INT;
+    DECLARE v_emp_name VARCHAR(100);
+    DECLARE v_depid INT;
+    DECLARE v_salary INT;
+
+ 
+    DECLARE emp_cursor CURSOR FOR
+        SELECT emp_id, emp_name, depid, salary FROM employees;
+
+    
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+  
+    OPEN emp_cursor;
+
+    emp_loop: LOOP
+        FETCH emp_cursor INTO v_emp_id, v_emp_name, v_depid, v_salary;
+
+        IF done THEN
+            LEAVE emp_loop;
+        END IF;
+
+
+        SELECT 
+            v_emp_id AS ID,
+            v_emp_name AS Name,
+            v_depid AS Department_ID,
+            v_salary AS Salary;
+
+    END LOOP;
+
+ 
+    CLOSE emp_cursor;
+END //
+
+DELIMITER ;
+
+
+Lab 2: Create a cursor to retrieve all courses and display them one by one. 
+
+ans:
+	DELIMITER //
+
+CREATE PROCEDURE ShowAllCourses()
+BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE v_id INT;
+    DECLARE v_name VARCHAR(100);
+    DECLARE v_duration VARCHAR(50);
+
+   
+    DECLARE course_cursor CURSOR FOR
+        SELECT course_id, course_name, course_duration FROM courses;
+
+   
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+   
+    OPEN course_cursor;
+
+    course_loop: LOOP
+        FETCH course_cursor INTO v_id, v_name, v_duration;
+
+        IF done THEN
+            LEAVE course_loop;
+        END IF;
+
+      
+        SELECT 
+            v_id AS Course_ID,
+            v_name AS Course_Name,
+            v_duration AS Duration;
+
+    END LOOP;
+
+
+    CLOSE course_cursor;
+END //
+
+DELIMITER ;
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+19
+
+Lab 1: Perform a transaction where you create a savepoint, insert records, then rollback to 
+the savepoint. 
+
+-->
+START TRANSACTION;
+
+INSERT INTO course (course_id, course_name, duration)
+VALUES (201, 'Java Programming', '3 Months');
+
+INSERT INTO course (course_id, course_name, duration)
+VALUES (202, 'Database Management', '4 Months');
+
+SAVEPOINT before_more_inserts;
+
+-- Step 3: Insert more records
+INSERT INTO course (course_id, course_name, duration)
+VALUES (203, 'Web Development', '6 Months');
+
+INSERT INTO course (course_id, course_name, duration)
+VALUES (204, 'Networking Basics', '2 Months');
+
+ROLLBACK TO before_more_inserts;
+
+COMMIT;
+
+Lab 2: Commit part of a transaction after using a savepoint and then rollback the remaining 
+changes.
+
+-->
+START TRANSACTION;
+
+INSERT INTO course (course_id, course_name, duration)
+VALUES (301, 'Cloud Computing', '5 Months');
+
+INSERT INTO course (course_id, course_name, duration)
+VALUES (302, 'Cyber Security', '6 Months');
+
+SAVEPOINT first_inserts;
+
+INSERT INTO course (course_id, course_name, duration)
+VALUES (303, 'AI & Machine Learning', '6 Months');
+
+INSERT INTO course (course_id, course_name, duration)
+VALUES (304, 'Big Data Analytics', '4 Months');
+
+RELEASE SAVEPOINT first_inserts;
+COMMIT;
+
+ROLLBACK;
+
+

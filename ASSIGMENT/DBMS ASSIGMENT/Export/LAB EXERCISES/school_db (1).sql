@@ -1,0 +1,168 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Aug 22, 2025 at 08:37 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `school_db`
+--
+
+DELIMITER $$
+--
+-- Procedures
+--
+CREATE DEFINER=`root`@`localhost` PROCEDURE `GetCourseDetails` (IN `p_course_id` INT)   BEGIN
+    SELECT course_id, course_name, course_duration
+    FROM courses
+    WHERE course_id = p_course_id;
+END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ShowAllCourses` ()   BEGIN
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE v_id INT;
+    DECLARE v_name VARCHAR(100);
+    DECLARE v_duration VARCHAR(50);
+
+   
+    DECLARE course_cursor CURSOR FOR
+        SELECT course_id, course_name, course_duration FROM courses;
+
+   
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+   
+    OPEN course_cursor;
+
+    course_loop: LOOP
+        FETCH course_cursor INTO v_id, v_name, v_duration;
+
+        IF done THEN
+            LEAVE course_loop;
+        END IF;
+
+      
+        SELECT 
+            v_id AS Course_ID,
+            v_name AS Course_Name,
+            v_duration AS Duration;
+
+    END LOOP;
+
+
+    CLOSE course_cursor;
+END$$
+
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `courses`
+--
+
+CREATE TABLE `courses` (
+  `course_id` int(11) NOT NULL,
+  `course_name` varchar(50) DEFAULT NULL,
+  `course_duration` varchar(60) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`course_id`, `course_name`, `course_duration`) VALUES
+(1, 'python', '9 months'),
+(3, 'full stack', '24 months'),
+(4, 'soft skill', '2 months'),
+(5, 'ai', '10 months');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `students`
+--
+
+CREATE TABLE `students` (
+  `ID` int(11) NOT NULL,
+  `NAME` varchar(60) DEFAULT NULL,
+  `AGE` int(11) DEFAULT NULL,
+  `CLASS` varchar(30) DEFAULT NULL,
+  `ADDRESS` varchar(200) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`ID`, `NAME`, `AGE`, `CLASS`, `ADDRESS`) VALUES
+(1, 'VED JANI', 21, 'MCA', 'MORBI'),
+(2, 'RUSHI JANI', 20, 'M COM', 'MORBI'),
+(3, 'DEV JOSHI', 21, 'B COM', 'MORBI'),
+(4, 'ROMIT VAGHLA', 18, 'MCA', 'RAJKOT'),
+(5, 'KRISH SAVALIYA', 18, 'BCA', 'RAJKOT');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `teachers`
+--
+
+CREATE TABLE `teachers` (
+  `teacher_id` int(11) NOT NULL,
+  `teacher_name` varchar(60) NOT NULL,
+  `subject` varchar(50) NOT NULL,
+  `email` varchar(90) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `courses`
+--
+ALTER TABLE `courses`
+  ADD PRIMARY KEY (`course_id`);
+
+--
+-- Indexes for table `students`
+--
+ALTER TABLE `students`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indexes for table `teachers`
+--
+ALTER TABLE `teachers`
+  ADD PRIMARY KEY (`teacher_id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `teacher_id` (`teacher_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `students`
+--
+ALTER TABLE `students`
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
