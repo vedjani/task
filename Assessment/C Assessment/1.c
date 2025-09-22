@@ -66,19 +66,19 @@ void vowelsconsonants(char str[])
 
 void countspace(char str[])
 {
-    int blanks = 0, digits = 0;
+    int space = 0, digits = 0;
     for (int i = 0; str[i] != '\0'; i++)
     {
         if (str[i] == ' ')
         {
-            blanks++;
+            space++;
         }
         if (str[i] >= '0' && str[i] <= '9')
         {
             digits++;
         }
     }
-    printf("Blanks = %d, Digits = %d\n", blanks, digits);
+    printf("Space = %d, Digits = %d\n", space, digits);
 }
 
 int main()
@@ -90,7 +90,7 @@ int main()
     do
     {
         printf("\nEnter a string: ");
-        scanf(" %s", str);
+        gets(str);
 
         printf("\n--- MENU ---\n");
         printf("1. Reverse\n");
