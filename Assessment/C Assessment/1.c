@@ -1,7 +1,8 @@
 #include <stdio.h>
+#include <conio.h>
 #include <string.h>
 
-void reverseString(char str[]) 
+void revStr(char str[])
 {
     int len = strlen(str);
     printf("Reversed: ");
@@ -12,51 +13,46 @@ void reverseString(char str[])
     printf("\n");
 }
 
-void checkPalindrome(char str[]) 
+void checkpalindrome(char str[])
 {
-    int len = strlen(str), flag = 1;
-    for (int i = 0; i < len/2; i++) 
+    int i = 0, j = strlen(str) - 1;
+    while (i < j)
     {
-        if (str[i] != str[len - i - 1]) 
+        if (str[i] != str[j])
         {
-            flag = 0; 
-            break;
+            printf("\nNot Palindrome");
+            return;
         }
+        i++;
+        j--;
     }
-    if (flag)
-    { 
-        printf("Palindrome\n");
-    }
-    else 
-    {
-        printf("Not Palindrome\n");
-    }
+    printf("Palindrome\n");
 }
 
-void copyString(char str[]) 
+void copyStr(char str[])
 {
     char copy[100];
     strcpy(copy, str);
     printf("Copied string: %s\n", copy);
 }
 
-void lengthString(char str[]) 
+void lenStr(char str[])
 {
     printf("Length: %d\n", (int)strlen(str));
 }
 
-void countVowelsConsonants(char str[]) 
+void vowelsconsonants(char str[])
 {
     int v = 0, c = 0;
-    for (int i = 0; str[i] != '\0'; i++) 
+    for (int i = 0; str[i] != '\0'; i++)
     {
         char ch = str[i];
-    
-        if (ch >= 'A' && ch <= 'Z') 
+
+        if (ch >= 'A' && ch <= 'Z')
         {
             ch = ch + 32;
         }
-        if (ch=='a'||ch=='e'||ch=='i'||ch=='o'||ch=='u') 
+        if (ch == 'a' || ch == 'e' || ch == 'i' || ch == 'o' || ch == 'u')
         {
             v++;
         }
@@ -68,16 +64,16 @@ void countVowelsConsonants(char str[])
     printf("Vowels = %d, Consonants = %d\n", v, c);
 }
 
-void countBlanksDigits(char str[]) 
+void countspace(char str[])
 {
     int blanks = 0, digits = 0;
-    for (int i = 0; str[i] != '\0'; i++) 
+    for (int i = 0; str[i] != '\0'; i++)
     {
         if (str[i] == ' ')
-        { 
+        {
             blanks++;
         }
-        if (str[i] >= '0' && str[i] <= '9') 
+        if (str[i] >= '0' && str[i] <= '9')
         {
             digits++;
         }
@@ -85,15 +81,16 @@ void countBlanksDigits(char str[])
     printf("Blanks = %d, Digits = %d\n", blanks, digits);
 }
 
-int main() 
+int main()
 {
     char str[100], str2[100];
     int choice;
     char count;
 
-    do {
+    do
+    {
         printf("\nEnter a string: ");
-        scanf(" %[^\n]", str);
+        scanf(" %s", str);
 
         printf("\n--- MENU ---\n");
         printf("1. Reverse\n");
@@ -106,57 +103,55 @@ int main()
         printf("Enter choice: ");
         scanf("%d", &choice);
 
-        switch(choice) 
+        switch (choice)
         {
-            case 1:
-            {
-            reverseString(str); 
+        case 1:
+        {
+            revStr(str);
             break;
-            }
-            case 2: 
-            {
-                printf("Enter another string: ");
-                scanf(" %[^\n]", str2);
-                strcat(str, str2);
-                printf("Concatenated: %s\n", str);
-                break;
-            }
-            case 3: 
-            {
-                checkPalindrome(str); 
-                break;
-            }
-            case 4: 
-            {
-                copyString(str); 
-                break;
-            }
-            case 5: 
-            {
-                lengthString(str); 
-                break;
-            }
-            case 6: 
-            {
-                countVowelsConsonants(str); 
-                break;
-            }
-            case 7: 
-            {
-                countBlanksDigits(str); 
-                break;
-            }
-            default:
-            {
-                printf("Invalid choice!\n");
-            }
+        }
+        case 2:
+        {
+            printf("Enter another string: ");
+            scanf(" %s", str2);
+            strcat(str, str2);
+            printf("Concatenated: %s\n", str);
+            break;
+        }
+        case 3:
+        {
+            checkpalindrome(str);
+            break;
+        }
+        case 4:
+        {
+            copyStr(str);
+            break;
+        }
+        case 5:
+        {
+            lenStr(str);
+            break;
+        }
+        case 6:
+        {
+            vowelsconsonants(str);
+            break;
+        }
+        case 7:
+        {
+            countspace(str);
+            break;
+        }
+        default:
+        {
+            printf("\nInvalid choice!");
+        }
         }
 
         printf("\nDo you want to continue? (y/n): ");
         scanf(" %c", &count);
 
-    } while(count=='y' || count=='Y');
-
-    printf("Program ended.\n");
+    } while (count == 'y' || count == 'Y');
     return 0;
 }
