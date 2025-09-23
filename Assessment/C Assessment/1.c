@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <conio.h>
 #include <string.h>
 
 void revStr(char str[])
@@ -91,8 +90,8 @@ int main()
     do
     {
         printf("\nEnter a string: ");
-        gets(str);
-
+        fgets(str, sizeof(str), stdin);
+        
         printf("\n--- MENU ---\n");
         printf("1. Reverse\n");
         printf("2. Concatenate\n");
@@ -103,6 +102,7 @@ int main()
         printf("7. Blanks & Digits\n");
         printf("Enter choice: ");
         scanf("%d", &choice);
+        getchar();
 
         switch (choice)
         {
@@ -114,7 +114,7 @@ int main()
         case 2:
         {
             printf("Enter another string: ");
-            scanf(" %s", str2);
+            gets(str2);
             strcat(str, str2);
             printf("Concatenated: %s\n", str);
             break;
@@ -152,7 +152,9 @@ int main()
 
         printf("\nDo you want to continue? (y/n): ");
         scanf(" %c", &option);
+        getchar();
 
     } while (option== 'y' || option == 'Y');
+
     return 0;
-}
+} 
