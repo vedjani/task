@@ -32,7 +32,8 @@ void checkpalindrome(char str[])
 void copyStr(char str[])
 {
     char copy[100];
-    strcpy(copy, str);
+    puts(str);
+    strcpy(copy,str);
     printf("Copied string: %s\n", copy);
 }
 
@@ -85,7 +86,7 @@ int main()
 {
     char str[100], str2[100];
     int choice;
-    char count;
+    char option;
 
     do
     {
@@ -150,8 +151,8 @@ int main()
         }
 
         printf("\nDo you want to continue? (y/n): ");
-        scanf(" %c", &count);
+        scanf(" %c", &option);
 
-    } while (count == 'y' || count == 'Y');
+    } while (option== 'y' || option == 'Y');
     return 0;
 }
