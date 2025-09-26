@@ -90,7 +90,7 @@ int main()
     do
     {
         printf("\nEnter a string: ");
-        fgets(str, sizeof(str), stdin);
+        gets(str);
         
         printf("\n--- MENU ---\n");
         printf("1. Reverse\n");
